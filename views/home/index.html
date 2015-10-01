@@ -1,0 +1,480 @@
+<header class="row" style="">
+    <nav class="navbar navbar-fixed-tops navbar-default" style="height: 10%;background-color: #7f8c8d">
+
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <h1><u><a class="" style="color: #ffffff;font-family: cursive" href="#">
+                    <span style="color: blue">Zone</span>
+                    <span style="color: green">2</span>
+                    <span style="color: red">3</span>
+                    <span style="color: yellow">7</span>
+
+                </a></u></h1>
+            </div>
+
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="margin-left: 20%">
+                <!--<form class="navbar-form navbar-left col-sm-11" role="search">
+                    <div class="form-group" style="">
+                        <input type="text" size="60" class="form-control btn-toolbar" placeholder="Search">
+                    </div>
+                    <button type="submit" class="btn"><i class="glyphicon glyphicon-search"></i></button>
+                </form>-->
+                <span class="" style="color: #ffffff;">
+                    <h2 style=""> Welcome <a href="/settings" data-content="{{ userData.Id_User }}" id="main_link"><img src="/images/avatar/{{ userData.Avatar }}" width="50"> {{ userData.Login }}</a>
+                        <a href="/logout" data-content="{{ userData.Login }}" id="logout" class="pull-right">Logout</a>
+                    </h2>
+                </span>
+                <span class="navbar-right">
+                    <!--<a href="#"><i class="glyphicon glyphicon-tower"></i> <span class="badge">99+</span></a> <span class="nav-divider" style="border-right: ridge;"></span>&nbsp;
+                    <a href="#"><i class="glyphicon glyphicon-comment"></i> <span class="badge">42</span></a> <span class="nav-divider" style="border-right: ridge;"></span>&nbsp;
+                    <a href="#"><i class="glyphicon glyphicon-globe"></i> <span class="badge">42</span></a>-->
+                    <!--<a href="/logout" data-content="{{ userData.Login }}" id="logout" class="pull-right">Logout</a> -->
+                </span>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="row" style="margin-top: 0%;width: 95%;margin-left:1%;">
+    <nav class="pull-left col-sm-6 col-md-4" id="roomsList" style="border-right: double;width: 20%;">
+        <div class="" id="myRooms" style="height: 50%;overflow: auto">
+            <div class="panel panel-success" style="height: 90%;">
+                <div class="panel-heading">My Rooms <span style="float: right">
+                        <a href="/room" target="_blank" type="submit" id="add_room" class="btn btn-success" title="Create New Room">
+                            <i class="glyphicon glyphicon-plus-sign"></i>
+                        </a>
+                </span></div>
+                <div class="panel-bodys" id="myChatRooms">
+                    <ul class="list-group" style="width: 100%">
+                        {{#each userData.MY_ROOMS }}
+                        <li class="list-group-item dropdown list-items" style="display: block">
+                            <a class="link dropdown-toggle menuFor_{{ Id_Chat_Room }}" type="button" id="{{ Name_Chat_Room }}" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                {{ Name_Chat_Room }}
+                                <span class="caret" style="float: right"></span>
+                            </a>
+
+                            <ul class="dropdown-menu my_room_control" aria-labelledby="dropdownMenu1">
+                                <li><a href="#" id="chatWith_{{ Id_Chat_Room }}" class="click_chat">Chat</a></li>
+                                <li><a href="#" data-content="{{ Name_Chat_Room }}" id="leaveRoom_{{ Id_Chat_Room }}" class="leave_room">Leave Room</a></li>
+                            </ul>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="public_rooms" style="height: 30%;">
+            <div class="panel panel-success" style="height: 100%;">
+                <div class="panel-heading">Other Rooms</div>
+                <div class="panel-bodys" id="otherChatRooms" style="height: 100%;overflow: auto">
+                    <ul class="list-group" style="width: 100%">
+                        {{#each userData.OTHER_ROOMS }}
+                        <li class="list-group-item list-items">
+                            <div class="dropdown roomNumber_{{ Id_Chat_Room }}">
+                                <a class="link dropdown-toggle" type="button" id="dropdownMenu1" data-toggle='dropdown' aria-haspopup='true' aria-expanded='true'>
+                                    {{ Name_Chat_Room }}
+                                    <span class="caret" style="float: right"></span>
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                    <li><a href="#" class="join_room" id="joinRoom_{{ Id_Chat_Room }}">Join Room</a></li>
+                                </ul>
+                            </div>
+                        </li>
+                        {{/each}}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="pull-right" style="width: 19%;">
+        <div class="panel panel-success">
+            <div class="panel-heading">Active users</div>
+            <div class="panel-bodys" style="height: 70%;overflow: auto">
+                <ul  id="user_list" class="nav list-items">
+                    <!--<li>
+                       div class='dropdown'>
+                           <button class='btn dropdown-toggle' id='dropdownMenu2' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                               <img src="/images/avatar/clook.png" width="30"> Dropup
+                               <span class='caret'></span>
+                           </button>
+                           <ul class='dropdown-menu' aria-labelledby='dropdownMenu2'>
+                               <li><a href='#'>Action</a></li>
+                           </ul>
+                       </div>
+                   </li>-->
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <nav class="container-fluid" style="width: 61%;border: groove;height: auto;background-color: #bdc3c7;border-radius: 10px">
+        <div class="chat_zone" style="border: ridge;width: 101%;max-height: 80%;min-height: 70%;overflow: hidden;margin-top:1%;padding: 2%;color: #ffffff;">
+            <ul class="nav nav-tabs nav-justified" id="main_tabs" style="background-color: #006666;border-radius: 10px">
+                <!--<li data-id='1' data-content='GENERAL' role='GENERAL' class='tab_items item_GENERAL'><a href='#'>GENERAL <span class='close pull-right'>x</span></a></li>-->
+            </ul>
+
+            <div class="tab-content main_tab_container">
+
+                <!--<div id="intro" class='tab-pane fade in active' style="border:solid;overflow: auto;height:59%">
+                    <h2>Hello. Welcome to ZONE 237. Select a room or user and start chatting <img src="/images/smilleys/Cool.png" /></h2>
+                </div> -->
+            </div>
+        </div>
+
+        <!--<div class="smilleys_zone" style="margin-top: 1%;height: auto;font-family: Geneva;font-weight: bolder;">
+
+            <div class="btn-group dropup pull-right">
+                <button type="button" title="Emoticons" class="btn btn-info" data-toggle="dropdown"><i class="glyphicon glyphicon-th-large"></i></button>
+
+                <div class="dropdown-menu">
+                    <table>
+                        <tr>
+                            <td><img src="/images/smilleys/Adore.png" alt="..." title="Adore (:A)" class="thumbnail smilley" width="50" id="adore" data-code=":A"></td>
+                            <td><img src="/images/smilleys/Cool.png" alt="..." title="Cool (:C)" class="thumbnail smilley" width="50" id="cool" data-code=":C"></td>
+                            <td><img src="/images/smilleys/Cry.png" alt="..." title="Cry (:CR)" class="thumbnail smilley" width="50" id="cry" data-code=":CR"></td>
+                        </tr>
+                        <tr>
+                            <td><img src="/images/smilleys/Furious.png" title="Furious (:F)" alt="..." class="thumbnail smilley" width="50" id="furious" data-code=":F"></td>
+                            <td><img src="/images/smilleys/Laugh.png" title="Laugh (:))" alt="..." class="thumbnail smilley" width="50" id="laugh" data-code=":)"></td>
+                            <td><img src="/images/smilleys/Pudently.png" title="Pudently (:()" alt="..." class="thumbnail smilley" width="50" id="pudently" data-code=":("></td>
+                        </tr>
+                        <tr>
+                            <td><img src="/images/smilleys/Struggle.png" alt="..." title="Struggle (:ST)" class="thumbnail smilley" width="50" id="struggle" data-code=":ST"></td>
+                            <td><img src="/images/smilleys/Study.png" alt="..." title="Study (:S)" class="thumbnail smilley" width="50" id="stydy" data-code=":S"></td>
+                            <td><img src="/images/smilleys/Sweet-angel.png" title="Sweet-angel (:SA)" alt="..." class="thumbnail smilley" width="50" id="sweet-angel" data-code=":SA"></td>
+                        </tr>
+
+                    </table>
+                </div>
+            </div>
+
+        </div> -->
+
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="message ..." id="send_message">
+
+              <div class="input-group-btn">
+                  <div class="btn-group dropup pull-right">
+                    <button class="btn btn-success" type="button" data-toggle="dropdown"><img src="/images/smilleys/Cool.png" width="20px"></button>
+                    <div class="dropdown-menu">
+                        <table>
+                            <tr>
+                                <td><img src="/images/smilleys/Adore.png" alt="..." title="Adore (:A)" class="thumbnail smilley" width="50" id="adore" data-code=":A"></td>
+                                <td><img src="/images/smilleys/Cool.png" alt="..." title="Cool (:C)" class="thumbnail smilley" width="50" id="cool" data-code=":C"></td>
+                                <td><img src="/images/smilleys/Cry.png" alt="..." title="Cry (:CR)" class="thumbnail smilley" width="50" id="cry" data-code=":CR"></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/smilleys/Furious.png" title="Furious (:F)" alt="..." class="thumbnail smilley" width="50" id="furious" data-code=":F"></td>
+                                <td><img src="/images/smilleys/Laugh.png" title="Laugh (:))" alt="..." class="thumbnail smilley" width="50" id="laugh" data-code=":)"></td>
+                                <td><img src="/images/smilleys/Pudently.png" title="Pudently (:()" alt="..." class="thumbnail smilley" width="50" id="pudently" data-code=":("></td>
+                            </tr>
+                            <tr>
+                                <td><img src="/images/smilleys/Struggle.png" alt="..." title="Struggle (:ST)" class="thumbnail smilley" width="50" id="struggle" data-code=":ST"></td>
+                                <td><img src="/images/smilleys/Study.png" alt="..." title="Study (:S)" class="thumbnail smilley" width="50" id="stydy" data-code=":S"></td>
+                                <td><img src="/images/smilleys/Sweet-angel.png" title="Sweet-angel (:SA)" alt="..." class="thumbnail smilley" width="50" id="sweet-angel" data-code=":SA"></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+              </div>
+        </div>
+
+        <div class="message_zone" style="width: auto">
+
+            <!--<div class="input-group room_chat_message">
+                <input type="text" class="form-control" placeholder="chat message ...." id="room_chat_message">
+
+                <div class="input-group-btn">
+                    <div class="btn-group dropup">
+                        <button type="button" title="Emoticons" class="btn btn-info" data-toggle="dropdown"><img src="/images/smilleys/Cool.png" width="20px"></button>
+
+                        <div class="dropdown-menu">
+                            <table>
+                                <tr>
+                                    <td><img src="/images/smilleys/Adore.png" alt="..." title="Adore (:A)" class="thumbnail smilley" width="50" id="adore" data-code=":A"></td>
+                                    <td><img src="/images/smilleys/Cool.png" alt="..." title="Cool (:C)" class="thumbnail smilley" width="50" id="cool" data-code=":C"></td>
+                                    <td><img src="/images/smilleys/Cry.png" alt="..." title="Cry (:CR)" class="thumbnail smilley" width="50" id="cry" data-code=":CR"></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="/images/smilleys/Furious.png" title="Furious (:F)" alt="..." class="thumbnail smilley" width="50" id="furious" data-code=":F"></td>
+                                    <td><img src="/images/smilleys/Laugh.png" title="Laugh (:))" alt="..." class="thumbnail smilley" width="50" id="laugh" data-code=":)"></td>
+                                    <td><img src="/images/smilleys/Pudently.png" title="Pudently (:()" alt="..." class="thumbnail smilley" width="50" id="pudently" data-code=":("></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="/images/smilleys/Struggle.png" alt="..." title="Struggle (:ST)" class="thumbnail smilley" width="50" id="struggle" data-code=":ST"></td>
+                                    <td><img src="/images/smilleys/Study.png" alt="..." title="Study (:S)" class="thumbnail smilley" width="50" id="stydy" data-code=":S"></td>
+                                    <td><img src="/images/smilleys/Sweet-angel.png" title="Sweet-angel (:SA)" alt="..." class="thumbnail smilley" width="50" id="sweet-angel" data-code=":SA"></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group pm_chat_message" style="display: none;">
+                <input class="form-control" size="0" placeholder="PM chat message" id="pm_chat_message" >
+                <div class="input-group-btn">
+                    <div class="btn-group dropup pull-right">
+                        <button type="button" title="Emoticons" class="btn btn-info" data-toggle="dropdown"><i class="glyphicon glyphicon-th-large"></i></button>
+
+                        <div class="dropdown-menu">
+                            <table>
+                                <tr>
+                                    <td><img src="/images/smilleys/Adore.png" alt="..." title="Adore (:A)" class="thumbnail smilley" width="50" id="adore" data-code=":A"></td>
+                                    <td><img src="/images/smilleys/Cool.png" alt="..." title="Cool (:C)" class="thumbnail smilley" width="50" id="cool" data-code=":C"></td>
+                                    <td><img src="/images/smilleys/Cry.png" alt="..." title="Cry (:CR)" class="thumbnail smilley" width="50" id="cry" data-code=":CR"></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="/images/smilleys/Furious.png" title="Furious (:F)" alt="..." class="thumbnail smilley" width="50" id="furious" data-code=":F"></td>
+                                    <td><img src="/images/smilleys/Laugh.png" title="Laugh (:))" alt="..." class="thumbnail smilley" width="50" id="laugh" data-code=":)"></td>
+                                    <td><img src="/images/smilleys/Pudently.png" title="Pudently (:()" alt="..." class="thumbnail smilley" width="50" id="pudently" data-code=":("></td>
+                                </tr>
+                                <tr>
+                                    <td><img src="/images/smilleys/Struggle.png" alt="..." title="Struggle (:ST)" class="thumbnail smilley" width="50" id="struggle" data-code=":ST"></td>
+                                    <td><img src="/images/smilleys/Study.png" alt="..." title="Study (:S)" class="thumbnail smilley" width="50" id="stydy" data-code=":S"></td>
+                                    <td><img src="/images/smilleys/Sweet-angel.png" title="Sweet-angel (:SA)" alt="..." class="thumbnail smilley" width="50" id="sweet-angel" data-code=":SA"></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <input type="hidden" readonly value="" id="message_destination_type">
+            <input type="hidden" readonly value="" id="active_chat_room">
+            <input type="hidden" readonly value="" id="active_pm_user">
+        </div>
+
+    </nav>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var socket = io.connect();
+        $("#main_tabs").tab();
+        $("[data-toggle='tooltip']").tooltip(),
+                already_shown = [];
+
+        socket.emit("init_new_user",{user:$("#logout").attr("data-content")});
+        socket.emit("reset_chat_boxes");
+        socket.emit("get_active_users");
+        socket.emit("update_active_users_list");
+
+        //socket.emit("load_room_messages",{room :1});
+        //$("#GENERAL").animate({scrollTop: $("#GENERAL")[0].scrollHeight}, 100);
+
+        socket.on("new_public_Room", function (data) {
+            //$("#roomsList").html(data+"<br>");
+            //$("#otherChatRooms .list-group-item").append(data);
+        });
+
+        $(".leave_room").click(function (e) {
+            e.preventDefault();
+            var room_id = $(this).attr("id").split("_")[1];
+            if(confirm("Do you really want to leave this room ("+$(this).attr("data-content")+")")){
+                socket.emit("leave_room",{room:room_id});
+            }
+        });
+
+        socket.on('You_left_room', function () {
+            window.location.reload(true);
+        });
+
+        socket.on("room_leaving_err", function (data) {
+           alert(data.err);
+        });
+
+        $(".click_chat").click(function (e) {
+            e.preventDefault();
+            var Id = $(this).attr('id').split("_")[1];
+
+            var chat_window_data = {
+                chatTitle: $.trim($(".menuFor_"+Id).html().split('<')[0]),
+                box_id: Id
+            };
+            socket.emit("open_chat_window",chat_window_data);
+        });
+
+        $(".nav-tabs").on("click",".room_chat_box",function(e){
+            e.preventDefault();
+            var content = $(this).attr('data-content');
+            $(".tab-pane").removeClass('active');
+            $("#"+content).addClass("active");
+            //alert(content);
+
+            //alert($(this).attr('data-id'));
+
+            $("#active_chat_room").val($(this).attr('data-id'));
+            $("#message_destination_type").val("FOR_ROOM");
+            //$("#active_chat_room_name").val($(this+" a").html());
+
+            //socket.emit("load_room_messages",{room : $(this).attr('data-id')});
+            $(this).tab("show");
+        });
+
+        $(".nav-tabs").on("click",".pm_chat_box",function(e){
+            e.preventDefault();
+            var content = $(this).attr('data-content');
+            $(".tab-pane").removeClass('active');
+            $("#"+content).addClass("active");
+            //alert(content);
+
+            //alert($(this).attr('data-id'));
+
+            $("#active_chat_room").val($(this).attr('data-id'));
+            $("#message_destination_type").val("FOR_PM");
+            //$("#active_chat_room_name").val($(this+" a").html());
+
+            //socket.emit("load_room_messages",{room : $(this).attr('data-id')});
+            $(this).tab("show");
+        });
+
+        socket.on("new_chat_box", function (data) {
+            $(".nav-tabs").append(data.head);
+            $(".main_tab_container").append(data.content);
+
+            $(".tab-pane").removeClass('active');
+            $(".main_tab_container #"+data.tab).addClass("active");
+            $(".tab_items").removeClass('active');
+            $(".item_"+data.tab).addClass("active");
+
+            $("#active_chat_room").val(data.active_room);
+            $("#message_destination_type").val("FOR_ROOM");
+
+            $("#active_chat_room_name").val(data.active_room);
+            $("#"+data.tab).tab("show");
+
+            socket.emit("load_room_messages",{room:data.active_room});
+
+        });
+
+        socket.on("open_existing_chat_window", function (data) {
+            $(".test").html(data.chatWindow);
+
+            $(".tab-pane").removeClass('active');
+            $("#"+data.chatWindow).addClass("active");
+            $(".tab_items").removeClass('active');
+            $(".item_"+data.chatWindow).addClass("active");
+
+            $("#active_chat_room").val(data.active_room);
+            $("#message_destination_type").val("FOR_ROOM");
+
+            $("#"+data.chatWindow).tab("show");
+            socket.emit("load_room_messages",{room:data.active_room});
+        });
+
+
+        $(".smilley").click(function (e) {
+            e.preventDefault();
+            /*if($("#room_chat_message").css("display") === 'block'){
+                $("#room_chat_message").val($("#room_chat_message").val()+" "+$(this).attr("data-code")+" ");
+                $("#room_chat_message").focus();
+            }else{
+                //alert($("#pm_chat_message").css("display"));
+                //if($("#pm_chat_message").css("display") === 'block'){
+                $("#pm_chat_message").val($("#pm_chat_message").val()+" "+$(this).attr("data-code")+" ");
+                $("#pm_chat_message").focus();
+                //}
+            } */
+            $("#send_message").val($("#send_message").val()+" "+$(this).attr("data-code"));
+
+        });
+
+        $(".join_room").click(function (e) {
+            e.preventDefault();
+            var room_id = $(this).attr("id").split("_")[1];
+            socket.emit("join_chat_room",room_id);
+        });
+
+        socket.on("join_room_status", function (data) {
+            if(data.status ==  true){
+                window.location.reload(true);
+            }else{
+                alert("Sorry cannot join room now ");
+            }
+        });
+
+        socket.on("new_room_chat_message", function (infos) {
+            var sound = new Audio("/media/new_message_2.mp3");
+            $(".main_tab_container #"+infos.room).append("<br>"+infos.msg);
+            $(".tab-content #"+infos.room).animate({scrollTop: $(".tab-content #"+infos.room)[0].scrollHeight}, 1);
+            //sound.play();
+        });
+
+        socket.on("update_user_list", function (list) {
+            if(list.length == 0){ return; }
+            var html="";
+            already_shown = [];
+
+            $("#user_list").html("");
+
+            for(var i=0;i<list.length;i++){
+                //alert(list[i].login);
+                if(list[i].login == $("#logout").attr("data-content")){
+                    //alert("Ne montre pas "+list[i].login);
+                    continue;
+                }
+                //alert(i);
+                //alert("montre "+list[i].login);
+                if(already_shown.indexOf(list[i].Id) == -1 && list[i].login !== 'undefined'){
+                    html += "<li style='width: 100%' class=''><div class='dropdown' style=''>";
+                    html += "<button class='btn dropdown-toggle' id='pmWith_"+list[i].Id+"' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='width:100%;text-align:left'>";
+                    html += "<img src='/images/avatar/"+list[i].Avatar+"' width='30'> <span style=''>"+list[i].login+"</span>";
+                    html += " <span class='caret'></span> </button>";
+                    html += "<ul class='dropdown-menu' aria-labelledby='pmWith_"+list[i].Id+"'>";
+                    html += "<li><a href='#' class='start_pm' id='user_"+list[i].Id+"'>Go Private</a></li></ul></div>";
+
+                    already_shown.push(list[i].Id);
+                }
+                //alert(i);
+                //tmp = html;
+            }
+
+            $("#user_list").html(html);
+        });
+
+        socket.on("new_user_logged_in", function (user) {
+            if(already_shown.indexOf(user.Id_User) == -1){
+                //alert(user.Login);
+                var html = "";
+                if(user.Login !== $("#logout").attr("data-content")){
+                    //alert(user.Login);
+                    //alert(html);
+                    html = "<li style='width: 100%'><div class='dropdown'>";
+
+                    html += "<button class='btn dropdown-toggle' id='pmWith_"+user.Id_User+"' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false' style='width:100%;text-align:left'>";
+                    html += "<img src='/images/avatar/"+user.Avatar+"' width='30'> "+user.Login;
+                    html += " <span class='caret'></span> </button>";
+                    html += "<ul class='dropdown-menu' aria-labelledby='pmWith_"+user.Id_User+"'>";
+                    html += "<li><a href='#' class='start_pm' id='user_"+user.Id_User+"'>Go Private</a></li></ul></div>";
+
+                    $("#user_list").append(html);
+                    already_shown.push(user.Id_User);
+                }
+            }else{
+                //alert("Merde");
+            }
+        });
+
+        socket.on("user_gone", function () {
+            //alert("1 GONE ");
+            socket.emit("update_active_users_list",{for:$("#logout").attr('data-content')});
+        });
+
+        $("#logout").click(function (e) {
+            socket.emit('logout',$(this).attr("data-content"));
+        });
+
+    });
+</script>

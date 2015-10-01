@@ -1,0 +1,123 @@
+<div class="container-fluid row well" style="height: auto;width: 50%;margin-top: 2%;margin-left: 25%;">
+    <div class="alert" id="msg" role="alert"></div>
+    <form class="form-control-static" name="addRoom" id="addRoom" method="post" action="/room">
+        <table class="table">
+            <caption>
+                <div class="panel panel-success">
+                    <div class="panel-heading"><h3>Add Chat Room</h3></div>
+                </div>
+            </caption>
+
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        <input type="text" name="name" id="name" class="form-control" placeholder="Chat room name" aria-describedby="basic-addon1">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Logo
+                    <div class="row">
+
+                        <div class="col-xs-6 col-md-2">
+                            <input type="radio" name="logo" class="radio" id="default" value="default.jpg">
+                            <label for="default">
+                                <a href="#" class="thumbnail">
+                                    <img src="/images/avatar/default.jpg" alt="..." width="40">
+                                </a>
+                            </label>
+                        </div>
+
+                        <div class="col-xs-6 col-md-2">
+                            <input type="radio" name="logo" checked class="radio" id="clook" value="clook.png">
+                            <label for="clook">
+                                <a href="#" class="thumbnail">
+                                    <img src="/images/avatar/clook.png" width="40">
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" name="max_users" id="max_user" class="form-control" placeholder="Max number of users : 0 => unlimited" aria-describedby="basic-addon1">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-book"></i></span>
+                        <input type="text" name="description" id="description" class="form-control" placeholder="Room Rules and Description" aria-describedby="basic-addon1">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="input-group">
+                        Room Type
+                        <select name="roomType" id="roomType">
+                            <option value="public">Public</option>
+                            <option value="private">Private</option>
+                        </select>
+
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="text-align: center">
+                    <button type="submit" class="btn btn-primary" id="login_btn">
+                        <i class="glyphicon glyphicon-ok-sign"></i> Save it
+                    </button>
+
+                    <a href="/" type="submit" class="btn btn-danger" id="signup">
+                        <i class="glyphicon glyphicon-new-window"></i> Cancel
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var socket = io.connect();
+
+        $("#addRoom").on("submit", function (e) {
+            e.preventDefault();
+            var room_name = $.trim($('#name').val()),
+                room_logo = $("#addRoom input[name='logo']:checked").val(),
+                room_max_user = (parseInt($.trim($("#max_user").val()))==null)?0:parseInt($.trim($("#max_user").val())),
+                room_description = $.trim($("#description").val()),
+                room_type = $("#roomType").val();
+
+            if(room_name.length == 0){
+                $("#msg").html("Cannot create a ROOM without name").addClass("alert-warning").removeClass("alert-success");
+            }
+
+            var data = {
+                Name_Chat_Room:room_name,Rules_Chat_Room:room_description,Logo_Chat_Room:room_logo,Chat_Room_Type:room_type,Chat_Room_Max_Users:room_max_user
+            };
+            socket.emit("addRoom",{data:data});
+        });
+
+        socket.on("ROOM_EXISTS", function (data) {
+            $("#msg").html(data).addClass("alert-warning").removeClass("alert-success");
+        });
+
+        socket.on("NEW_ROOM_SUCCESS", function (data) {
+            $("#msg").html(data).removeClass("alert-warning").addClass("alert-success");
+            socket.emit("new public room","HAHAHA");
+        });
+    });
+</script>

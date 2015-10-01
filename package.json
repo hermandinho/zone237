@@ -1,0 +1,8 @@
+{
+  "name" : "Zone237",
+  "version" : "0.0.1",
+  "description" : "Chat room",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

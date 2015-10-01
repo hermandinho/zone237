@@ -1,0 +1,151 @@
+<div class="container-fluid row well" style="height: auto;width: 50%;margin-top: 2%;margin-left: 25%;">
+    <div class="alert" id="msg" role="alert"></div>
+    <form class="form-control-static" name="signMeIn" id="signMeIn" method="post">
+        <table class="table">
+            <caption>
+                <div class="panel panel-success">
+                    <div class="panel-heading"><h3>{{ title }}</h3></div>
+                </div>
+            </caption>
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-user"></i></span>
+                        <input type="text" name="login" id="login" class="form-control" placeholder="Login" aria-describedby="basic-addon1">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1"><i class="glyphicon glyphicon-eye-close"></i></span>
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Avatar :
+                    <div class="row">
+
+                        <div class="col-xs-6 col-md-2">
+                            <input type="radio" name="avatar" class="radio" checked id="default" value="default.jpg">
+                            <label for="default">
+                                <a href="#" class="thumbnail">
+                                    <img src="/images/avatar/default.jpg" alt="..." width="40">
+                                </a>
+                            </label>
+                        </div>
+
+                        <div class="col-xs-6 col-md-2">
+                            <input type="radio" name="avatar" class="radio" id="clook" value="clook.png">
+                            <label for="clook">
+                                <a href="#" class="thumbnail">
+                                    <img src="/images/avatar/clook.png" width="40">
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Chat Color
+
+                    <div class="row">
+
+                        <div class="col-xs-6 col-md-2">
+                            <input type="radio" name="color" class="radio" checked id="red" value="red">
+                            <label for="default">
+                                <a href="#" class="thumbnail" style="width: 4rem;height: 4rem;background-color: red">
+                                </a>
+                            </label>
+                        </div>
+
+                        <div class="col-xs-6 col-md-2">
+                            <input type="radio" name="color" class="radio" id="green" value="green">
+                            <label for="green">
+                                <a href="#" class="thumbnail" style="width: 4rem;height: 4rem;background-color: green">
+                                </a>
+                            </label>
+                        </div>
+
+                        <div class="col-xs-6 col-md-2">
+                            <input type="radio" name="color" class="radio" id="blue" value="blue">
+                            <label for="blue">
+                                <a href="#" class="thumbnail" style="width: 4rem;height: 4rem;background-color: blue">
+                                </a>
+                            </label>
+                        </div>
+
+                        <div class="col-xs-6 col-md-2">
+                            <input type="radio" name="color" class="radio" id="black" value="black">
+                            <label for="black">
+                                <a href="#" class="thumbnail" style="width: 4rem;height: 4rem;background-color: black">
+                                </a>
+                            </label>
+                        </div>
+
+                        <div class="col-xs-6 col-md-2">
+                            <input type="radio" name="color" class="radio" id="darkcyan" value="darkcyan">
+                            <label for="darkcyan">
+                                <a href="#" class="thumbnail" style="width: 4rem;height: 4rem;background-color: darkcyan">
+                                </a>
+                            </label>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td style="text-align: center">
+                    <button type="submit" class="btn btn-primary" id="login_btn">
+                        <i class="glyphicon glyphicon-ok-sign"></i> Sign up
+                    </button>
+
+                    <a href="/" type="submit" class="btn btn-danger" id="signup">
+                        <i class="glyphicon glyphicon-arrow-left"></i> Back, Have an account
+                    </a>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+
+        var socket = io.connect();
+
+        $("#signMeIn").on("submit", function (e) {
+            e.preventDefault();
+            var login = $.trim($("#login").val()),
+                password = $.trim($("#password").val()),
+                avatar = $("#signMeIn input[name='avatar']:checked").val(),
+                color = $("#signMeIn input[name='color']:checked").val();
+
+            if(login.length == 0 || password.length == 0){
+                alert("Form error");
+            }else{
+                socket.emit("signUp",{login:login,password:password,color:color,avatar:avatar})
+            }
+        });
+
+        socket.on("LOGIN_ERR", function (data) {
+            $("#login").css({"background":"red"}).focus();
+            $("#msg").html(data).addClass('alert-warning').removeClass("alert-success");
+        });
+
+        socket.on("SIGNUP_ERR", function (data) {
+            $("#login").css({"background":"white"});
+            $("#msg").html(data).addClass('alert-warning').removeClass("alert-success");
+        });
+
+        socket.on("SIGNUP_SUCCESS", function (data) {
+            $("#login").css({"background":"white"});
+            $("#msg").html(data).addClass('alert-success').removeClass("alert-warning");
+        });
+    });
+</script>
